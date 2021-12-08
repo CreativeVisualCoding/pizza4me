@@ -1,17 +1,33 @@
 package org.acme.entity;
 
-public class Kunde {
-    private long id;
-    private String vorname, nachname;
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@NamedQuery(name = "AlleKunden",query ="select s from Kunde s")
+public class Kunde implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name = "id", nullable = false)
+    private Long id;
+    @Version
+    private Long version;
+    private String vorname;
+    private String nachname;
+    @OneToOne(cascade=CascadeType.PERSIST)
+    @JoinColumn(name="a_id")
     private Adresse adresse;
 
-    public Kunde(String vorname, String nachname) {
-        this.vorname = vorname;
-        this.nachname = nachname;
+    public Kunde() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setId(long id) {

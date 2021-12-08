@@ -3,6 +3,7 @@ package org.acme.boundary;
 import org.acme.control.KundenService;
 import org.acme.entity.Kunde;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
@@ -13,6 +14,7 @@ import java.util.Collection;
 @Path("/kunden")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@ApplicationScoped
 public class KundenResource {
 
     @Inject

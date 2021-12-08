@@ -1,14 +1,33 @@
 package org.acme.entity;
 
-public class Adresse {
+import javax.persistence.*;
+import java.io.Serializable;
 
-    private String plz, ort, straße, hausnr;
+@Entity
+public class Adresse implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    public Adresse(String plz, String ort, String straße, String hausnr) {
-        this.plz = plz;
-        this.ort = ort;
-        this.straße = straße;
-        this.hausnr = hausnr;
+    @Id @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name = "a_id", nullable = false)
+    private Long id;
+
+    @Version
+    private Long version;
+
+    private String plz;
+    private String ort;
+    private String straße;
+    private String hausnr;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Adresse() {
     }
 
     public String getPlz() {
