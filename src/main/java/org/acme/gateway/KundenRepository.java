@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -40,7 +41,7 @@ public class KundenRepository {
     }
 
     private Kunde kundeAnlegenPersistent(Kunde kunde) {
-        kunde.setId(newID++);
+//        kunde.setId(newID++);
         em.persist(kunde);
         return kunde;
     }
@@ -70,8 +71,16 @@ public class KundenRepository {
     }
 
     private Collection<Kunde> kundenAbfragenPersistent() {
-        TypedQuery<Kunde> tmp = em.createNamedQuery("AlleKunden", Kunde.class);
+        TypedQuery<Kunde> tmp = em. createNamedQuery("AlleKunden", Kunde.class);
         return tmp.getResultList();
+
+        /* https://stackoverflow.com/questions/38336840/jpa-get-all-elements
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Kunde> cq = cb.createQuery(Kunde.class);
+        Root<Kunde> rootEntry = cq.from(Kunde.class);
+        CriteriaQuery<Kunde> all = cq.select(rootEntry);
+        TypedQuery<Kunde> allQuery = em.createQuery(all);
+        return allQuery.getResultList();*/
     }
 
     public Kunde kundeAbfragen(long kundenNr) {
@@ -82,6 +91,7 @@ public class KundenRepository {
         return kundenDB.get(kundenNr);
     }
 
+//    @Transactional
     private Kunde kundeAbfragenPersistent(long kundenNr) {
         return this.em.find(Kunde.class, kundenNr);
     }

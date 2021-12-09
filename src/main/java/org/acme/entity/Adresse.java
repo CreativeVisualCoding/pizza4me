@@ -4,11 +4,15 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+// https://github.com/cdi-spec/cdi-spec.org/blob/master/_faq/integration/201-why-is-veto-a-best-practice-for-persistent-jpa-entities.asciidoc
+//@Vetoed
+//@Embeddable
 public class Adresse implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(name = "a_id", nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+//    @Column(name = "a_id", nullable = false)
     private Long id;
 
     @Version
@@ -28,6 +32,13 @@ public class Adresse implements Serializable {
     }
 
     public Adresse() {
+    }
+
+    public Adresse(String plz, String ort, String straße, String hausnr) {
+        this.plz = plz;
+        this.ort = ort;
+        this.straße = straße;
+        this.hausnr = hausnr;
     }
 
     public String getPlz() {
